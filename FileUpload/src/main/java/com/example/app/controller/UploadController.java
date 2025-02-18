@@ -19,14 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class UploadController {
-    private static final String UPLOAD_FOLDER = "C:/Users/zd3N06/gallery/";
+    private static final String UPLOAD_DIRECTORY = "C:/Users/zd3N06/gallery/";
     @GetMapping("/")
     public String index() {
         return "redirect:/upload";
     }
     @GetMapping("/upload")
     public String showImages(Model model){
-        File uploadDirectory = new File(UPLOAD_FOLDER);
+        File uploadDirectory = new File(UPLOAD_DIRECTORY);
         File[] fileList = uploadDirectory.listFiles();
         List<String> fileNames = Arrays.stream(fileList).map(file -> file.getName()).toList();
         model.addAttribute("fileNames", fileNames);
@@ -43,14 +43,14 @@ public class UploadController {
         String fileName = upfile.getOriginalFilename();
         System.out.println("FileName: " + fileName);
 
-        File dest = new File(UPLOAD_FOLDER + "/" + fileName);
+        File dest = new File(UPLOAD_DIRECTORY + "/" + fileName);
         upfile.transferTo(dest);
         model.addAttribute("fileName", fileName);
         return "uploadDone";
     }
     @GetMapping("/delete/{fileName}")
     public String deleteImage(@PathVariable String fileName) throws IOException {
-        Path path = Paths.get(UPLOAD_FOLDER + "/" + fileName);
+        Path path = Paths.get(UPLOAD_DIRECTORY + "/" + fileName);
         Files.delete(path);
         return "redirect:/upload";
     }     

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja" xmlns="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <title>ファイルアップロード</title>
@@ -9,6 +9,10 @@
         flex-wrap: wrap;
         gap: 20px;
       }
+
+      .image-wrapper {
+        max-width: 400px;
+      }
       .image-wrapper img {
         width: 100%;
       }
@@ -17,14 +21,13 @@
   <body>
     <h1>ファイルアップロード</h1>
     <p>画像をアップロードしてください</p>
-
     <form action="" method="post" enctype="multipart/form-data">
       <p>ファイル：<input type="file" name="upfile" /></p>
       <p><input type="submit" value="アップロード" /></p>
     </form>
     <h2>画像一覧</h2>
     <div class="gallery">
-      <div class="image-wrapper" th:each="name : ${fillNames}">
+      <div class="image-wrapper" th:each="name : ${fileNames}">
         <img th:src="@{/gallery/{img}(img=${name})}" />
         <p><a th:href="@{/delete/{img}(img=${name})}">削除</a></p>
       </div>
